@@ -66,9 +66,9 @@ const TextOverlay = ({ text, isVisible, position = 'center', delay = 0 }) => {
     }, [isVisible, text, delay]);
 
     const positionClasses = {
-        center: 'top-[30%] md:top-1/2 left-1/2 -translate-x-1/2 md:-translate-y-1/2',
-        bottom: 'bottom-[25%] md:bottom-[15%] left-1/2 -translate-x-1/2',
-        top: 'top-[15%] left-1/2 -translate-x-1/2'
+        center: 'top-[10%] md:top-1/2 left-1/2 -translate-x-1/2 md:-translate-y-1/2',
+        bottom: 'top-[10%] md:bottom-[15%] left-1/2 -translate-x-1/2',
+        top: 'top-[10%] md:top-[15%] left-1/2 -translate-x-1/2'
     };
 
     const words = text.split(' ');
@@ -76,7 +76,8 @@ const TextOverlay = ({ text, isVisible, position = 'center', delay = 0 }) => {
     return (
         <div
             ref={containerRef}
-            className={`text-overlay absolute ${positionClasses[position]} z-50 pointer-events-none`}
+            className={`text-overlay absolute ${positionClasses[position]} z-50 pointer-events-none w-full text-center`}
+            style={{ fontFamily: 'Gagalin, "Inter", sans-serif' }}
         >
             <div className="flex flex-wrap justify-center gap-x-[0.3em] gap-y-[0.1em]">
                 {words.map((word, i) => (
