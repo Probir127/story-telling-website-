@@ -180,11 +180,11 @@ function App() {
         const ctx = gsap.context(() => {
             const slices = photoContainerRef.current.querySelectorAll('.photo-slice');
 
-            // Animate Active Slice
+            // Animate Active Slice - Pure Fade
             const active = slices[currentScene];
             gsap.fromTo(active,
-                { x: '100%', opacity: 0, scale: 1.1 },
-                { x: '0%', opacity: 1, scale: 1, duration: 1.5, ease: "power3.inOut" }
+                { opacity: 0, scale: 1.05 },
+                { opacity: 1, scale: 1, duration: 1.5, ease: "power2.inOut" }
             );
 
             // Conditional Ken Burns or Video Handling
@@ -211,10 +211,10 @@ function App() {
                 }
             }
 
-            // Animate Other Slices OUT
+            // Animate Other Slices OUT - Fade
             slices.forEach((slice, i) => {
                 if (i !== currentScene) {
-                    gsap.to(slice, { x: '-30%', opacity: 0, duration: 1.2, ease: "power3.inOut" });
+                    gsap.to(slice, { opacity: 0, duration: 1.2, ease: "power2.inOut" });
                     // Kill tweens only for images
                     const img = slice.querySelector('.photo-img');
                     if (img) gsap.killTweensOf(img);
