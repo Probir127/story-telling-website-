@@ -327,7 +327,7 @@ function App() {
                             className="group px-8 py-3 md:px-12 md:py-5 bg-white text-black font-light text-lg md:text-2xl tracking-[0.3em] md:tracking-[0.5em] hover:bg-gray-200 transition-all rounded-full shadow-[0_0_50px_rgba(255,255,255,0.1)] hover:shadow-[0_0_80px_rgba(255,255,255,0.2)] relative overflow-hidden"
                             style={{ fontFamily: 'Gagalin, "Courier New", monospace' }}
                         >
-                            <span className="relative z-10">MAKE MEMORIES</span>
+                            <span className="relative z-10">MEMORY</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
                         </button>
                     )}
