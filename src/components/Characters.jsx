@@ -33,6 +33,7 @@ export const SiblingsIntro = ({ isActive, sceneType = 'intro', className = '' })
         <div className={`relative ${className}`} style={{ width: '300px', height: '400px' }}>
             {/* Big Sister (taller, left) */}
             <svg
+                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 100 220"
                 className="absolute"
                 style={{
