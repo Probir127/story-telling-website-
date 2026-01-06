@@ -279,9 +279,40 @@ function App() {
 
             {/* START BUTTON */}
             {!isPlaying && currentScene === 0 && (
-                <div className="absolute inset-0 z-[100] flex items-center justify-center bg-black/95 transition-opacity duration-1000">
+                <div className="absolute inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-1000 overflow-hidden">
+                    {/* Polaroid Photo Collage Background */}
+                    <div className="absolute inset-0 opacity-20">
+                        {[
+                            '/media/IMG_0018.jpg', '/media/IMG_0019.jpg', '/media/IMG_0352.jpg',
+                            '/media/IMG_0818.jpg', '/media/IMG_0929.jpg', '/media/IMG_0930.jpg',
+                            '/media/IMG_0931.jpg', '/media/IMG_0932.jpg', '/media/IMG_0933.jpg',
+                            '/media/IMG_0934.jpg', '/media/IMG_0935 - Copy.jpg', '/media/IMG_0936.jpg',
+                            '/media/IMG_0937.jpg', '/media/IMG_0939.jpg', '/media/IMG_0940.jpg',
+                            '/media/IMG_0941.jpg', '/media/milk_tea.jpg', '/media/fastfood.jpg'
+                        ].map((img, i) => (
+                            <div
+                                key={i}
+                                className="absolute"
+                                style={{
+                                    width: '120px',
+                                    left: `${(i * 7) % 95}%`,
+                                    top: `${((i * 13) % 85)}%`,
+                                    transform: `rotate(${(i * 17) % 60 - 30}deg)`,
+                                    padding: '8px',
+                                    paddingBottom: '32px',
+                                    backgroundColor: 'white',
+                                    boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+                                }}
+                            >
+                                <div
+                                    className="w-full h-24 bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${img})` }}
+                                />
+                            </div>
+                        ))}
+                    </div>
                     {!imagesLoaded ? (
-                        <div className="flex flex-col items-center gap-6">
+                        <div className="flex flex-col items-center gap-6 relative z-10">
                             <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
                                 <div
                                     className="h-full bg-white/40 transition-all duration-300 ease-out"
