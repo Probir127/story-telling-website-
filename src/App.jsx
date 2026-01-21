@@ -22,16 +22,39 @@ import ParticleEffect from './components/ParticleEffect';
 const TOTAL_SCENES = 15;
 
 const collageImages = [
+    "/media/17a2104c-7ae7-433e-9895-2cbdbb9a2e96.jpg",
     "/media/20b2c799-537a-428b-b6d2-0dbbe98bf292.jpg",
+    "/media/2036cedb-4de6-4b3a-b00d-748f3be645f1.jpg",
+    "/media/606401957_122240528438154899_4875089277273218884_n.jpg",
+    "/media/608891691_122240528960154899_5952225032590537460_n.jpg",
+    "/media/610653257_122240528714154899_4670426393795344700_n.jpg",
+    "/media/615377911_122242649336154899_729503040569252640_n.jpg",
+    "/media/616172974_122242649306154899_2758737799740570464_n.jpg",
+    "/media/617615034_122242649420154899_3004472121284252267_n.jpg",
     "/media/8c7c44f7-168d-4ed1-99ff-46654299caab.jpg",
+    "/media/IMG_0018.jpg",
+    "/media/IMG_0019.jpg",
     "/media/IMG_0352.jpg",
+    "/media/IMG_0818.jpg",
+    "/media/IMG_0929.jpg",
+    "/media/IMG_0930.jpg",
+    "/media/IMG_0931.jpg",
+    "/media/IMG_0932.jpg",
     "/media/IMG_0933.jpg",
     "/media/IMG_0934.jpg",
+    "/media/IMG_0935 - Copy.jpg",
+    "/media/IMG_0936.jpg",
     "/media/IMG_0937.jpg",
+    "/media/IMG_0939.jpg",
     "/media/IMG_0940.jpg",
     "/media/IMG_0941.jpg",
     "/media/IMG_1449.jpg",
-    "/media/eff02042-9f62-4e94-82ad-f8b3c87441d1.jpg"
+    "/media/IMG_5759.jpg",
+    "/media/WhatsApp Image 2026-01-21 at 8.21.02 PM.jpeg",
+    "/media/eff02042-9f62-4e94-82ad-f8b3c87441d1.jpg",
+    "/media/ending_lake.jpg",
+    "/media/fastfood.jpg",
+    "/media/milk_tea.jpg"
 ];
 
 // Precise Mapping & Configuration
@@ -182,9 +205,14 @@ function App() {
 
             // Animate Active Slice - Pure Fade
             const active = slices[currentScene];
+
+            // IMMEDIATELY set active slice visible to prevent blank flash
+            gsap.set(active, { opacity: 1, scale: 1 });
+
+            // Entrance animation (scale only, keeping opacity 1)
             gsap.fromTo(active,
-                { opacity: 0, scale: 1.05 },
-                { opacity: 1, scale: 1, duration: 1.5, ease: "power2.inOut" }
+                { scale: 1.03 },
+                { scale: 1, duration: 1.5, ease: "power2.out" }
             );
 
             // Conditional Ken Burns or Video Handling
@@ -324,10 +352,10 @@ function App() {
                     ) : (
                         <button
                             onClick={() => setIsPlaying(true)}
-                            className="group px-8 py-3 md:px-12 md:py-5 bg-white text-black font-light text-lg md:text-2xl tracking-[0.3em] md:tracking-[0.5em] hover:bg-gray-200 transition-all rounded-full shadow-[0_0_50px_rgba(255,255,255,0.1)] hover:shadow-[0_0_80px_rgba(255,255,255,0.2)] relative overflow-hidden border-2 border-black"
+                            className="group px-8 py-3 md:px-12 md:py-5 bg-white text-black font-light text-lg md:text-2xl tracking-[0.3em] md:tracking-[0.5em] hover:bg-gray-200 transition-all rounded-full shadow-[0_0_50px_rgba(255,255,255,0.1)] hover:shadow-[0_0_80px_rgba(255,255,255,0.2)] relative overflow-hidden"
                             style={{ fontFamily: 'Gagalin, "Courier New", monospace' }}
                         >
-                            <span className="relative z-10">MEMORIES</span>
+                            <span className="relative z-10">MEMORY</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
                         </button>
                     )}
@@ -344,23 +372,38 @@ function App() {
                             style={{ opacity: 0, zIndex: i === currentScene ? 10 : 0 }}
                         >
                             {scene.type === 'collage' ? (
-                                <div className="w-full h-full grid grid-cols-3 gap-0.5 p-0.5 bg-black overflow-y-auto custom-scrollbar">
-                                    {scene.images.map((imgSrc, imgIdx) => (
-                                        <div
-                                            key={imgIdx}
-                                            className="relative aspect-[3/4] overflow-hidden group cursor-zoom-in"
-                                            onClick={() => {
-                                                setSelectedImage(imgSrc);
-                                                setIsPlaying(false); // Pause when viewing image
-                                            }}
-                                        >
+                                <div className="w-full h-full relative overflow-hidden bg-[#111]">
+                                    {scene.images.map((imgSrc, imgIdx) => {
+                                        // Deterministic random layout (pseudo-random based on index)
+                                        const randomLeft = (imgIdx * 23 + 7) % 80; // 0-80%
+                                        const randomTop = (imgIdx * 37 + 11) % 80; // 0-80%
+                                        const randomRoth = ((imgIdx * 17) % 30) - 15; // -15 to +15 deg
+
+                                        return (
                                             <div
-                                                className="w-full h-full bg-cover bg-center transform transition-transform duration-[2s] group-hover:scale-110"
-                                                style={{ backgroundImage: `url(${imgSrc})` }}
-                                            />
-                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                                        </div>
-                                    ))}
+                                                key={imgIdx}
+                                                className="absolute w-24 md:w-40 bg-white p-1.5 pb-4 md:p-2 md:pb-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:z-50 hover:scale-125 hover:rotate-0 cursor-pointer transform will-change-transform"
+                                                style={{
+                                                    left: `${randomLeft}%`,
+                                                    top: `${randomTop}%`,
+                                                    transform: `rotate(${randomRoth}deg)`
+                                                }}
+                                                onClick={() => {
+                                                    setSelectedImage(imgSrc);
+                                                    setIsPlaying(false); // Pause when viewing image
+                                                }}
+                                            >
+                                                <div className="w-full aspect-[4/5] overflow-hidden bg-gray-200">
+                                                    <img
+                                                        src={imgSrc}
+                                                        className="w-full h-full object-cover"
+                                                        alt={`Memory ${imgIdx}`}
+                                                        loading="lazy"
+                                                    />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             ) : (
                                 scene.src.endsWith('.mp4') || scene.src.endsWith('.webm') ? (

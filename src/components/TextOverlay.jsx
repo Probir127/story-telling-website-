@@ -1,64 +1,68 @@
 /**
- * TextOverlay Component
+ * TextOverlay Component - Awwwards-Quality Word Reveal
  * 
- * Displays animated text overlays with word-by-word reveal animation.
- * 
- * @component
- * @param {Object} props
- * @param {string} props.text - The text content to display
- * @param {boolean} props.isVisible - Controls visibility and animation state
- * @param {'center'|'bottom'|'top'} [props.position='center'] - Vertical positioning
- * @param {number} [props.delay=0] - Delay before animation starts (in milliseconds)
- * 
- * @example
- * <TextOverlay 
- *   text="Hello World" 
- *   isVisible={true} 
- *   position="bottom" 
- *   delay={500} 
- * />
+ * Displays animated text with cinematic word-by-word reveal.
+ * Features: staggered reveal, glow on emotional words, floating depth.
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
+
+// Words that get emphasized with a subtle glow
+const EMOTIONAL_WORDS = ['sister', 'victim', 'bully', 'impossible', 'replaced', 'quiet', 'free', 'married', 'love', 'heart', '❤️', '🕊️', '🫡'];
 
 const TextOverlay = ({ text, isVisible, position = 'center', delay = 0 }) => {
     const containerRef = useRef(null);
-    const wordsRef = useRef([]);
+
+    // Parse text into words with emotional detection
+    const words = useMemo(() => {
+        return text.split(' ').map((word, i) => ({
+            text: word,
+            isEmotional: EMOTIONAL_WORDS.some(ew => word.toLowerCase().includes(ew.toLowerCase()))
+        }));
+    }, [text]);
 
     useEffect(() => {
         if (!containerRef.current) return;
 
-        const words = containerRef.current.querySelectorAll('.word');
+        const wordElements = containerRef.current.querySelectorAll('.word');
 
         if (isVisible) {
             // Reset state
-            gsap.set(words, { opacity: 0, y: 10 });
+            gsap.set(wordElements, {
+                opacity: 0,
+                y: 15,
+                scale: 0.95,
+                filter: 'blur(4px)'
+            });
 
-            // Animate words in sequence with stagger effect
-            gsap.to(words, {
+            // Cinematic word-by-word reveal
+            gsap.to(wordElements, {
                 opacity: 1,
                 y: 0,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: "power2.out",
-                delay: delay / 1000, // Convert to seconds
+                scale: 1,
+                filter: 'blur(0px)',
+                duration: 0.5,
+                stagger: 0.12, // Slightly faster for better flow
+                ease: "power3.out",
+                delay: delay / 1000,
             });
 
-            // Gentle floating drift for depth
+            // Subtle floating for depth
             gsap.to(containerRef.current, {
-                y: "-=5",
-                duration: 3,
+                y: "-=3",
+                duration: 4,
                 repeat: -1,
                 yoyo: true,
-                ease: "sine.inOut"
+                ease: "sine.inOut",
+                delay: delay / 1000 + 0.5
             });
         } else {
-            // Animate out
-            gsap.to(words, {
+            // Fade out
+            gsap.to(wordElements, {
                 opacity: 0,
-                y: -5,
-                duration: 0.4,
+                y: -10,
+                duration: 0.3,
                 ease: "power2.in"
             });
             gsap.killTweensOf(containerRef.current);
@@ -71,22 +75,29 @@ const TextOverlay = ({ text, isVisible, position = 'center', delay = 0 }) => {
         top: 'top-[10%] md:top-[15%] left-1/2 -translate-x-1/2'
     };
 
-    const words = text.split(' ');
-
     return (
         <div
             ref={containerRef}
-            className={`text-overlay absolute ${positionClasses[position]} z-50 pointer-events-none w-full text-center`}
+            className={`text-overlay absolute ${positionClasses[position]} z-50 pointer-events-none w-full text-center px-4 md:px-8`}
             style={{ fontFamily: 'Gagalin, "Inter", sans-serif' }}
         >
-            <div className="flex flex-wrap justify-center gap-x-[0.3em] gap-y-[0.1em]">
-                {words.map((word, i) => (
+            <div className="flex flex-wrap justify-center gap-x-[0.35em] gap-y-[0.15em]">
+                {words.map((wordObj, i) => (
                     <span
                         key={i}
-                        className="word inline-block text-base md:text-3xl font-light tracking-wide text-white/95 drop-shadow-lg"
-                        style={{ opacity: 0 }}
+                        className={`word inline-block text-base md:text-2xl lg:text-3xl font-light tracking-wide 
+                            ${wordObj.isEmotional
+                                ? 'text-yellow-100/95 drop-shadow-[0_0_12px_rgba(255,255,200,0.5)]'
+                                : 'text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]'
+                            }`}
+                        style={{
+                            opacity: 0,
+                            textShadow: wordObj.isEmotional
+                                ? '0 0 20px rgba(255,255,200,0.4), 0 2px 10px rgba(0,0,0,0.8)'
+                                : '0 2px 15px rgba(0,0,0,0.9)'
+                        }}
                     >
-                        {word}
+                        {wordObj.text}
                     </span>
                 ))}
             </div>

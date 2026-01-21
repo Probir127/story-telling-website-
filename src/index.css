@@ -215,3 +215,110 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+/* Narrative Sequencer Styles */
+.narrative-sequencer {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.narrative-image {
+    will-change: opacity, transform;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.narrative-image img {
+    will-change: transform;
+    transform: translateZ(0);
+    /* Hardware acceleration */
+}
+
+/* Smooth image crossfade animation */
+@keyframes image-crossfade {
+    0% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Word reveal animation - subtle pop */
+@keyframes word-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.95);
+    }
+
+    60% {
+        transform: translateY(-2px) scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Ambient floating for narrative text */
+@keyframes narrative-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Performance optimizations */
+.narrative-sequencer * {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    .narrative-image,
+    .narrative-image img,
+    .word {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+}
+
+/* Progress bar shimmer animation */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Parallax image hover depth */
+.photo-slice {
+    perspective: 1000px;
+}
+
+.photo-img,
+.multi-img {
+    will-change: transform;
+    transform-style: preserve-3d;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TextOverlay from './TextOverlay';
 import {
     SiblingsIntro,
@@ -11,7 +11,7 @@ import {
     SlappingScene
 } from './Characters';
 
-// Scene 1: "This is my sister."
+// Scene 0: Intro
 export const SceneIntro = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-4 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
         <div className="character-container mb-6 md:mb-12">
@@ -21,7 +21,7 @@ export const SceneIntro = React.memo(({ isActive }) => (
     </div>
 ));
 
-// Scene 2: Childhood
+// Scene 1: Growing Up
 export const SceneGrowingUp = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-4 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
         <div className="character-container mb-6 md:mb-12">
@@ -31,7 +31,7 @@ export const SceneGrowingUp = React.memo(({ isActive }) => (
     </div>
 ));
 
-// Scene 3: Anger
+// Scene 2: Anger
 export const SceneAnger = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-4 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
         <div className="character-container mb-6 md:mb-12">
@@ -41,7 +41,7 @@ export const SceneAnger = React.memo(({ isActive }) => (
     </div>
 ));
 
-// Scene 3.5: Roasting & Beating
+// Scene 3: Roasting
 export const SceneRoasting = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-4 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
         <div className="character-container mb-6 md:mb-12">
@@ -61,7 +61,7 @@ export const SceneMilkTea = React.memo(({ isActive }) => (
     </div>
 ));
 
-// Scene 5: FastFood
+// Scene 5: Fast Food
 export const SceneFastFood = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-4 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
         <div className="character-container mb-6 md:mb-12">
@@ -114,7 +114,9 @@ export const SceneBrotherInLaw = React.memo(({ isActive }) => (
 // Scene 10: Wedding
 export const SceneWedding = React.memo(({ isActive }) => (
     <div className={`w-full h-full flex flex-col items-center justify-center p-6 md:p-12 text-center transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0 character-exit'}`}>
-        <div className="character-container mb-8"><SiblingsIntro isActive={isActive} sceneType="together" /></div>
+        <div className="character-container mb-8">
+            <SiblingsIntro isActive={isActive} sceneType="together" />
+        </div>
         <p className="text-white/80 text-sm md:text-lg font-light tracking-wide mb-1 md:mb-2 animate-pulse">She got married. 🕊️</p>
         <p className="text-white/90 text-lg md:text-2xl font-bold tracking-wider text-yellow-100/90 mb-2 md:mb-4 uppercase">I'M FINALLY FREE!</p>
         <p className="text-white/60 text-xs md:text-sm font-light italic">No refunds. No exchanges. His turn now.</p>
